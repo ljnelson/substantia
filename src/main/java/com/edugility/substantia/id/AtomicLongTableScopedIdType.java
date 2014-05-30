@@ -32,7 +32,7 @@ public class AtomicLongTableScopedIdType extends IdType<Long> {
   private static final long serialVersionUID = 1L;
 
   protected AtomicLongTableScopedIdType() {
-    super(this.getClass().getSimpleName(), Long.class);
+    super("AtomicLongTableScopedIdType", Long.class);
   }
 
 }
