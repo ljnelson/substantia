@@ -56,8 +56,38 @@ public class TestCasePerson {
     final Person p = new Person();
     em.persist(p);
     em.flush();
+    assertFalse(p.isTransient());
+    assertTrue(p.isVersioned());
+    assertEquals(Long.valueOf(1L), p.getId());
+    assertEquals(Integer.valueOf(1), p.getVersion());
+
+    et.commit();
+    et.begin();
+
+    final Person p2 = em.find(Person.class, 1L, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+    assertNotNull(p2);
+    assertFalse(p2.isTransient());
+    assertTrue(p2.isVersioned());
+    assertEquals(Long.valueOf(1L), p2.getId());
+    assertEquals(Integer.valueOf(1), p2.getVersion());
     
-    et.rollback();
+    et.commit();
+    et.begin();
+
+    final Person p3 = em.getReference(Person.class, 1L);
+    assertNotNull(p3);
+    assertFalse(p3.isTransient());
+    assertTrue(p3.isVersioned());
+    assertEquals(Long.valueOf(1L), p3.getId());
+    assertEquals(Integer.valueOf(2), p3.getVersion());
+
+    et.commit();
+    et.begin();
+
+    assertTrue(em.contains(p));
+    em.remove(p);
+
+    et.commit();
 
     em.close();
 

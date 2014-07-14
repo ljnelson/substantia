@@ -47,41 +47,60 @@ public abstract class Substance<I extends Serializable, V extends Comparable<V> 
 
   public abstract V getVersion();
 
-  public abstract String getDisplayName();
-
-  public abstract String getSortName();
-
-  /**
-   * Returns {@code true} if this {@link Substance} is an "in-flight"
-   * representation of a persistent identity represented by the
-   * supplied {@link Substance}.
-   *
-   * @param other the {@link Substance} that 
-   */
-  public boolean represents(final Substance<?, ?> other) {
-    if (other == null) {
-      return false;
-    }
-    return this.represents(other.getId(), other.getVersion());
+  public boolean isTransient() {
+    return this.getId() == null;
   }
 
-  public boolean represents(final Object id, final Object version) {
+  public boolean isVersioned() {
+    return this.getVersion() != null;
+  }
+
+  public final boolean represents(final Substance<?, ?> other) {
+    if (this.isTransient() ||
+        other == null ||
+        other.isTransient()) {
+      return false;
+    }
+
     final Object myId = this.getId();
-    if (id == null || myId == null || !myId.equals(id)) {
+    final Object hisId = other.getId();
+    if (myId == null || !myId.equals(hisId)) {
       return false;
     }
     
-    final Object myVersion = this.getVersion();
-    if (myVersion == null) {
-      if (version != null) {
-        return false;
-      }
-    } else if (!myVersion.equals(version)) {
+    return true;
+  }
+
+  public boolean isStalerThan(final Substance<? extends I, ? extends V> other) {
+    if (this.isTransient() || 
+        !this.isVersioned() ||
+        other == null ||
+        other.isTransient() || 
+        !other.isVersioned()) {
       return false;
     }
 
-    return true;
+    final Object id = this.getId();
+    if (id == null) {
+      if (other.getId() != null) {
+        return false;
+      }
+    } else if (!id.equals(other.getId())) {
+      return false;
+    }
+
+    final Comparable<V> version = this.getVersion();
+    if (version == null) {
+      return other.getVersion() == null;
+    } else {
+      final V hisVersion = other.getVersion();
+      return hisVersion != null && version.compareTo(hisVersion) < 0;
+    }
   }
+
+  public abstract String getDisplayName();
+
+  public abstract String getSortName();
 
   @Override
   public int hashCode() {
@@ -91,6 +110,9 @@ public abstract class Substance<I extends Serializable, V extends Comparable<V> 
     c = super.hashCode();
     hashCode = 37 * hashCode + c;
 
+    // Note: no usage of id in hashcode computation on purpose.
+
+    // TODO: should version be included here?
     final Object version = this.getVersion();
     c = version == null ? 0 : version.hashCode();
     hashCode = 37 * hashCode + c;
@@ -109,6 +131,9 @@ public abstract class Substance<I extends Serializable, V extends Comparable<V> 
     } else if (other instanceof Substance) {
       final Substance<?, ?> him = (Substance<?, ?>)other;
       
+      // Note: no usage of id in equals computation on purpose.
+
+      // TODO: should version be included here?
       final Object version = this.getVersion();
       final Object hisVersion = him.getVersion();
       if (version == null) {
