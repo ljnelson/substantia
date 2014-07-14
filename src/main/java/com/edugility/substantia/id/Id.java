@@ -33,11 +33,11 @@ import java.io.Serializable;
  * A class representing an identifier.
  *
  */
-public class Id<I> implements Serializable {
+public class Id<I, R> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private IdType<I> type;
+  private IdType<I, R> type;
 
   private I value;
 
@@ -45,23 +45,18 @@ public class Id<I> implements Serializable {
     super();
   }
 
-  public Id(final IdType<I> idType, final I value) {
+  public Id(final IdType<I, R> idType, final I value) {
     super();
     this.type = idType;
     this.value = value;
   }
 
-  public IdType<I> getType() {
+  public IdType<I, R> getType() {
     return this.type;
   }
 
   public I getValue() {
     return this.value;
-  }
-
-  public boolean isNumeric() {
-    final IdType<I> type = this.getType();
-    return type != null && type.isNumeric();
   }
 
   @Override
@@ -86,7 +81,7 @@ public class Id<I> implements Serializable {
     if (other == this) {
       return true;
     } else if (other != null && other.getClass().equals(this.getClass())) {
-      final Id<?> him = (Id<?>)other;
+      final Id<?, ?> him = (Id<?, ?>)other;
 
       final Object value = this.getValue();
       final Object hisValue = him.getValue();

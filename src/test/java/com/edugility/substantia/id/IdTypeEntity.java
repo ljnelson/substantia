@@ -27,12 +27,18 @@
  */
 package com.edugility.substantia.id;
 
-public class AtomicLongTableScopedIdType<R> extends IdType<Long, R> {
+public class IdTypeEntity<I, R> extends IdType<I, R> {
 
   private static final long serialVersionUID = 1L;
 
-  public AtomicLongTableScopedIdType(final Class<R> referentType) {
-    super("AtomicLongTableScopedIdType", Long.class, referentType);
+  private Long pk;
+
+  protected IdTypeEntity() {
+    super();
+  }
+
+  public IdTypeEntity(final String name, final Class<I> referenceType, final Class<R> referentType) {
+    super(name, referenceType, referentType);
   }
 
 }

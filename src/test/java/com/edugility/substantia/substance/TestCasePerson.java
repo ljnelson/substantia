@@ -25,14 +25,44 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.id;
+package com.edugility.substantia.substance;
 
-public class AtomicLongTableScopedIdType<R> extends IdType<Long, R> {
+import javax.persistence.*;
 
-  private static final long serialVersionUID = 1L;
+import com.edugility.substantia.id.AtomicLongTableScopedIdType;
 
-  public AtomicLongTableScopedIdType(final Class<R> referentType) {
-    super("AtomicLongTableScopedIdType", Long.class, referentType);
+import org.junit.*;
+
+import static org.junit.Assert.*;
+
+public class TestCasePerson {
+
+  public TestCasePerson() {
+    super();
   }
+
+  @Test
+  public void testingJPA() throws Exception {
+    final EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
+    assertNotNull(emf);
+
+    final EntityManager em = emf.createEntityManager();
+    assertNotNull(em);
+
+    final EntityTransaction et = em.getTransaction();
+    assertNotNull(et);
+    et.begin();
+
+    final Person p = new Person();
+    em.persist(p);
+    em.flush();
+    
+    et.rollback();
+
+    em.close();
+
+    emf.close();
+  }
+
 
 }

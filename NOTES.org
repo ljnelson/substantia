@@ -1,0 +1,3 @@
+* Overview
+Substantia aims to codify certain Enlightenment-era philosophical
+ideas into software.

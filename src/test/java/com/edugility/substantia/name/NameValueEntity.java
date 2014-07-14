@@ -25,14 +25,34 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.id;
+package com.edugility.substantia.name;
 
-public class AtomicLongTableScopedIdType<R> extends IdType<Long, R> {
+import com.edugility.nomen.NameValue;
+
+public class NameValueEntity extends NameValue {
 
   private static final long serialVersionUID = 1L;
 
-  public AtomicLongTableScopedIdType(final Class<R> referentType) {
-    super("AtomicLongTableScopedIdType", Long.class, referentType);
+  private Long pk;
+
+  protected NameValueEntity() {
+    super();
+  }
+
+  public NameValueEntity(final String value) {
+    super(value);
+  }
+
+  public NameValueEntity(final String value, final boolean atomic) {
+    super(value, atomic);
+  }
+
+  public NameValueEntity(final String value, final String whitespaceReplacement) {
+    super(value, whitespaceReplacement);
+  }
+
+  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
+    super(value, atomic, whitespaceReplacement);
   }
 
 }

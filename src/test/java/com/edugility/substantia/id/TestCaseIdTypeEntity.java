@@ -27,12 +27,44 @@
  */
 package com.edugility.substantia.id;
 
-public class AtomicLongTableScopedIdType<R> extends IdType<Long, R> {
+import javax.persistence.*;
 
-  private static final long serialVersionUID = 1L;
+import org.junit.*;
 
-  public AtomicLongTableScopedIdType(final Class<R> referentType) {
-    super("AtomicLongTableScopedIdType", Long.class, referentType);
+import static org.junit.Assert.*;
+
+public class TestCaseIdTypeEntity {
+
+  public TestCaseIdTypeEntity() {
+    super();
   }
+
+  @Test
+  public void testingJPA() throws Exception {
+    final EntityManagerFactory emf = Persistence.createEntityManagerFactory("test");
+    assertNotNull(emf);
+
+    final EntityManager em = emf.createEntityManager();
+    assertNotNull(em);
+
+    final EntityTransaction et = em.getTransaction();
+    assertNotNull(et);
+    et.begin();
+
+
+    final IdTypeEntity<Long, Object> idType = new IdTypeEntity<Long, Object>("Fred", Long.class, Object.class);
+    em.persist(idType);
+    em.flush();
+
+    assertTrue(em.contains(idType));
+    assertEquals(Long.valueOf(1L), em.getEntityManagerFactory().getPersistenceUnitUtil().getIdentifier(idType));
+    
+    et.rollback();
+
+    em.close();
+
+    emf.close();
+  }
+
 
 }

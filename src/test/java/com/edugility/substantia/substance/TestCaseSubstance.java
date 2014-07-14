@@ -25,14 +25,26 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.id;
+package com.edugility.substantia.substance;
 
-public class AtomicLongTableScopedIdType<R> extends IdType<Long, R> {
+import javax.persistence.*;
 
-  private static final long serialVersionUID = 1L;
+import com.edugility.substantia.id.AtomicLongTableScopedIdType;
 
-  public AtomicLongTableScopedIdType(final Class<R> referentType) {
-    super("AtomicLongTableScopedIdType", Long.class, referentType);
+import org.junit.*;
+
+import static org.junit.Assert.*;
+
+public class TestCaseSubstance {
+
+  public TestCaseSubstance() {
+    super();
   }
+
+  @Test
+  public void testRepresents() throws Exception {
+    
+  }
+
 
 }

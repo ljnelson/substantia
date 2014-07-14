@@ -32,11 +32,12 @@ import java.io.Serializable;
 /**
  * Metadata about identifiers.
  *
- * @param <R> The kind of things identifiers of this type point to.
- *
  * @param <I> The Java type that identifiers of this type are.
+ *
+ * @param <R> The Java type that referents picked out by identifiers
+ * of this type are.
  */
-public class IdType<I> implements Serializable {
+public class IdType<I, R> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -44,14 +45,17 @@ public class IdType<I> implements Serializable {
 
   private Class<I> referenceType;
 
+  private Class<R> referentType;
+
   protected IdType() {
     super();
   }
 
-  public IdType(final String name, final Class<I> referenceType) {
+  public IdType(final String name, final Class<I> referenceType, final Class<R> referentType) {
     super();
     this.name = name;
     this.referenceType = referenceType;
+    this.referentType = referentType;
   }
 
   public String getName() {
@@ -62,11 +66,10 @@ public class IdType<I> implements Serializable {
     return this.referenceType;
   }
 
-  public boolean isNumeric() {
-    final Class<I> referenceType = this.getReferenceType();
-    return referenceType != null && Number.class.isAssignableFrom(referenceType);
+  public Class<R> getReferentType() {
+    return this.referentType;
   }
-  
+
   @Override
   public int hashCode() {
     // http://www.linuxtopia.org/online_books/programming_books/thinking_in_java/TIJ313_029.htm
@@ -81,6 +84,10 @@ public class IdType<I> implements Serializable {
     c = referenceType == null ? 0 : referenceType.hashCode();
     hashCode = 37 * hashCode + c;
 
+    final Object referentType = this.getReferentType();
+    c = referentType == null ? 0 : referentType.hashCode();
+    hashCode = 37 * hashCode + c;
+
     return hashCode;
   }
 
@@ -89,7 +96,7 @@ public class IdType<I> implements Serializable {
     if (other == this) {
       return true;
     } else if (other != null && other.getClass().equals(this.getClass())) {
-      final IdType<?> him = (IdType<?>)other;
+      final IdType<?, ?> him = (IdType<?, ?>)other;
       
       final Object name = this.getName();
       final Object hisName = him.getName();
@@ -108,6 +115,16 @@ public class IdType<I> implements Serializable {
           return false;
         }
       } else if (!referenceType.equals(hisReferenceType)) {
+        return false;
+      }
+
+      final Object referentType = this.getReferentType();
+      final Object hisReferentType = him.getReferentType();
+      if (referentType == null) {
+        if (hisReferentType != null) {
+          return false;
+        }
+      } else if (!referentType.equals(hisReferentType)) {
         return false;
       }
 

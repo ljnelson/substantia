@@ -27,12 +27,15 @@
  */
 package com.edugility.substantia.id;
 
-public class AtomicLongTableScopedId extends Id<Long> {
+public class AtomicLongTableScopedId<R> extends Id<Long, R> {
 
   private static final long serialVersionUID = 1L;
 
-  public AtomicLongTableScopedId(final AtomicLongTableScopedIdType type, final Long value) {
+  public AtomicLongTableScopedId(final AtomicLongTableScopedIdType<R> type, final Long value) {
     super(type, value);
+    if (type == null) {
+      throw new IllegalArgumentException("type", new NullPointerException("type"));
+    }
   }
 
 }

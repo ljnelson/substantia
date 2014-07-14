@@ -25,14 +25,32 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.id;
+package com.edugility.substantia.substance;
 
-public class AtomicLongTableScopedIdType<R> extends IdType<Long, R> {
+import com.edugility.substantia.id.AtomicLongTableScopedId;
+import com.edugility.substantia.id.AtomicLongTableScopedIdType;
+import com.edugility.substantia.id.Id;
+
+public class Person extends NamedSubstance<Long, Integer> {
 
   private static final long serialVersionUID = 1L;
 
-  public AtomicLongTableScopedIdType(final Class<R> referentType) {
-    super("AtomicLongTableScopedIdType", Long.class, referentType);
+  private Long id;
+
+  private int version;
+
+  public Person() {
+    super();
+  }
+
+  @Override
+  public Long getId() {
+    return this.id;
+  }
+
+  @Override
+  public Integer getVersion() {
+    return Integer.valueOf(this.version);
   }
 
 }

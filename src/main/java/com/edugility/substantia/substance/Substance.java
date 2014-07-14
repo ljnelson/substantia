@@ -25,63 +25,62 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.presence;
+package com.edugility.substantia.substance;
 
-import com.edugility.nomen.AbstractNamed;
-import com.edugility.nomen.Valued;
-import com.edugility.nomen.NameType;
+import java.io.Serializable;
 
-import com.edugility.substantia.id.Id;
-
-public class Presence extends AbstractNamed {
+/**
+ * A substrate to which attributes may be attached.
+ *
+ * <p>A {@link Substance} serves to "take up space" in a coordinate
+ * system.</p>
+ */
+public abstract class Substance<I extends Serializable, V extends Comparable<V> & Serializable> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private Id<?> id;
-
-  private Object version;
-
-  protected Presence() {
+  protected Substance() {
     super();
   }
 
-  public Presence(final Id<?> id) {
-    super();
-    this.setId(id);
-  }
+  public abstract I getId();
 
-  public Id<?> getId() {
-    return this.id;
-  }
+  public abstract V getVersion();
 
-  public void setId(final Id<?> id) {
-    this.id = id;
-  }
+  public abstract String getDisplayName();
 
-  public Object getVersion() {
-    return this.version;
-  }
+  public abstract String getSortName();
 
-  public String getDisplayName() {
-    final String returnValue;
-    final Valued displayName = this.getName(NameType.valueOf("displayName"));
-    if (displayName == null) {
-      returnValue = null;
-    } else {
-      returnValue = displayName.getValue();
+  /**
+   * Returns {@code true} if this {@link Substance} is an "in-flight"
+   * representation of a persistent identity represented by the
+   * supplied {@link Substance}.
+   *
+   * @param other the {@link Substance} that 
+   */
+  public boolean represents(final Substance<?, ?> other) {
+    if (other == null) {
+      return false;
     }
-    return returnValue;
+    return this.represents(other.getId(), other.getVersion());
   }
 
-  public String getSortName() {
-    final String returnValue;
-    final Valued sortName = this.getName(NameType.valueOf("sortName"));
-    if (sortName == null) {
-      returnValue = this.getDisplayName();
-    } else {
-      returnValue = sortName.getValue();
+  public boolean represents(final Object id, final Object version) {
+    final Object myId = this.getId();
+    if (id == null || myId == null || !myId.equals(id)) {
+      return false;
     }
-    return returnValue;
+    
+    final Object myVersion = this.getVersion();
+    if (myVersion == null) {
+      if (version != null) {
+        return false;
+      }
+    } else if (!myVersion.equals(version)) {
+      return false;
+    }
+
+    return true;
   }
 
   @Override
@@ -107,8 +106,8 @@ public class Presence extends AbstractNamed {
   public boolean equals(final Object other) {
     if (other == this) {
       return true;
-    } else if (other != null && other.getClass().equals(this.getClass())) {
-      final Presence him = (Presence)other;
+    } else if (other instanceof Substance) {
+      final Substance<?, ?> him = (Substance<?, ?>)other;
       
       final Object version = this.getVersion();
       final Object hisVersion = him.getVersion();
@@ -121,12 +120,11 @@ public class Presence extends AbstractNamed {
       }
       
       final Object displayName = this.getDisplayName();
-      final Object hisDisplayName = him.getDisplayName();
       if (displayName == null) {
-        if (hisDisplayName != null) {
+        if (him.getDisplayName() != null) {
           return false;
         }
-      } else if (!displayName.equals(hisDisplayName)) {
+      } else if (!displayName.equals(him.getDisplayName())) {
         return false;
       }
 
@@ -134,6 +132,11 @@ public class Presence extends AbstractNamed {
     } else {
       return false;
     }
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(this.getDisplayName());
   }
 
 }
