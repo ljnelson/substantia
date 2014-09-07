@@ -25,38 +25,29 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.name;
+package com.edugility.substantia.annotations;
 
-import com.edugility.nomen.NameValue;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-/**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
- */
-public class NameValueEntity extends NameValue {
+@Documented
+@Retention(RetentionPolicy.CLASS)
+@Target({
+  ElementType.CONSTRUCTOR, 
+  ElementType.FIELD,
+  ElementType.METHOD,
+  ElementType.PACKAGE,
+  ElementType.TYPE
+})
+public @interface Notes {
 
-  private static final long serialVersionUID = 1L;
+  String description() default "";
 
-  private Long pk;
+  String url() default "";
 
-  protected NameValueEntity() {
-    super();
-  }
-
-  public NameValueEntity(final String value) {
-    super(value);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
-  }
-
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
-  }
+  String project() default "";
 
 }

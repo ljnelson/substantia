@@ -34,12 +34,27 @@
     </attributes>
   </entity>
 
-  <entity access="PROPERTY" class="com.edugility.nomen.NameType">
+  <entity access="PROPERTY" class="com.edugility.substantia.name.NameTypeEntity">
     <table name="NAME_TYPE"/>
     <attributes>
-      <id name="value">
-        <column name="VALUE"/>
+      <id name="id" access="FIELD">
+        <column name="ID" updatable="false"/>
+        <generated-value strategy="TABLE" generator="NameTypeEntityGenerator"/>
+        <table-generator
+            name="NameTypeEntityGenerator"
+            table="JPA_GENERATORS"
+            pk-column-name="JPA_GENERATOR_NAME"
+            value-column-name="JPA_GENERATOR_VALUE"
+            pk-column-value="NAME_TYPE_ENTITY"
+            initial-value="1"
+            allocation-size="100"/>
       </id>
+      <version name="version" access="FIELD">
+        <column name="VERSION" nullable="false"/>
+      </version>
+      <basic name="value" optional="false">
+        <column name="VALUE" length="30" nullable="false"/>
+      </basic>
     </attributes>
   </entity>
 
@@ -70,7 +85,37 @@
     </attributes>
   </entity>
 
+  <entity access="PROPERTY" class="com.edugility.substantia.name.NameEntity">
+    <table name="NAME"/>
+    <attributes>
+      <id name="pk" access="FIELD">
+        <column name="ID" updatable="false"/>
+        <generated-value strategy="TABLE" generator="NameEntityGenerator"/>
+        <table-generator
+            name="NameEntityGenerator"
+            table="JPA_GENERATORS"
+            pk-column-name="JPA_GENERATOR_NAME"
+            value-column-name="JPA_GENERATOR_VALUE"
+            pk-column-value="NAME_ENTITY"
+            initial-value="1"
+            allocation-size="100"/>
+      </id>
+      <basic name="namedId" access="FIELD">
+        <column name="NAMED_ID" nullable="false"/>
+      </basic>
+      <many-to-one name="nameValue" optional="false" target-entity="com.edugility.substantia.name.NameValueEntity">
+        <join-column name="NAME_VALUE_ID" nullable="false"/>
+        <foreign-key name="FK_NAME_NAMEVALUE" constraint-mode="CONSTRAINT" foreign-key-definition="FOREIGN KEY (NAME_VALUE_ID) REFERENCES NAME_VALUE (ID)"/>
+      </many-to-one>
+      <transient name="named"/>
+      <version name="version" access="FIELD">
+        <column name="VERSION" nullable="false" default="0"/>
+      </version>
+    </attributes>
+  </entity>
+
   <entity access="FIELD" class="com.edugility.substantia.substance.Person">
+    <table name="PERSON"/>
     <attributes>
       <id name="id">
         <column name="ID" updatable="false"/>

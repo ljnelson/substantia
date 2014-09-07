@@ -25,38 +25,44 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.name;
+package com.edugility.substantia.substance;
 
-import com.edugility.nomen.NameValue;
+import java.io.Serializable;
 
-/**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
- */
-public class NameValueEntity extends NameValue {
+@Deprecated
+public class DefaultSubstance<I extends Serializable, V extends Comparable<V> & Serializable> extends AbstractSubstance<I, V> {
 
   private static final long serialVersionUID = 1L;
 
-  private Long pk;
+  private I id;
 
-  protected NameValueEntity() {
+  private V version;
+
+  protected DefaultSubstance() {
     super();
   }
 
-  public NameValueEntity(final String value) {
-    super(value);
+  public DefaultSubstance(final I id) {
+    super();
+    this.id = id;
   }
 
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
+  @Override
+  public I getId() {
+    return this.id;
   }
 
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
+  public void setId(final I id) {
+    this.id = id;
   }
 
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
+  @Override
+  public V getVersion() {
+    return this.version;
+  }
+
+  public void setVersion(final V version) {
+    this.version = version;
   }
 
 }

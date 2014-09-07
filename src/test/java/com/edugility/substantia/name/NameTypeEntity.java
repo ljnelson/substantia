@@ -27,36 +27,48 @@
  */
 package com.edugility.substantia.name;
 
-import com.edugility.nomen.NameValue;
+import com.edugility.nomen.NameType;
+
+import com.edugility.substantia.substance.Substance;
 
 /**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
+ * A {@link NameType} with a {@link Long} primary key.  This class is
  * suitable for use in unit and functional testing only.
  */
-public class NameValueEntity extends NameValue {
+public class NameTypeEntity extends NameType implements Substance<Long, Integer> {
 
   private static final long serialVersionUID = 1L;
 
-  private Long pk;
+  private Long id;
 
-  protected NameValueEntity() {
+  private Integer version;
+
+  protected NameTypeEntity() {
     super();
   }
 
-  public NameValueEntity(final String value) {
+  public NameTypeEntity(final String value) {
     super(value);
   }
 
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
+  @Override
+  public Long getId() {
+    return this.id;
   }
 
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
+  @Override
+  public Integer getVersion() {
+    return this.version;
   }
 
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
+  @Override
+  public boolean isTransient() {
+    return this.getId() == null;
+  }
+
+  @Override
+  public boolean isVersioned() {
+    return this.getVersion() != null;
   }
 
 }

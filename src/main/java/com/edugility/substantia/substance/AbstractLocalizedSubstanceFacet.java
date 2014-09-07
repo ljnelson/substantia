@@ -25,38 +25,42 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.name;
+package com.edugility.substantia.substance;
 
-import com.edugility.nomen.NameValue;
+import java.io.Serializable;
+
+import java.util.Locale;
 
 /**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
+ * @param <SI> the type of identifier that the kinds of {@link
+ * Substance}s a particular {@link LocalizedSubstanceFacet} decorates
+ * have
+ *
+ * @param <LFI> the concrete type of {@link LocalizedFacetId} that
+ * identifies {@link LocalizedSubstanceFacet}s of the proper kind
+ *
+ * @param <V> the type of the version exposed by {@link
+ * LocalizedSubstanceFacet}s
+ *
+ * @param <S> the kind of {@link Substance}s that this {@link
+ * LocalizedSubstanceFacet} decorates
  */
-public class NameValueEntity extends NameValue {
+public abstract class AbstractLocalizedSubstanceFacet<SI extends Serializable, LFI extends LocalizedFacetId<SI>, V extends Comparable<V> & Serializable, S extends Substance<SI, ?>> extends AbstractSubstance<LFI, V> {
 
   private static final long serialVersionUID = 1L;
 
-  private Long pk;
+  private S substance;
 
-  protected NameValueEntity() {
+  protected AbstractLocalizedSubstanceFacet() {
     super();
   }
 
-  public NameValueEntity(final String value) {
-    super(value);
+  public S getSubstance() {
+    return this.substance;
   }
 
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
-  }
-
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
+  public void setSubstance(final S substance) {
+    this.substance = substance;
   }
 
 }

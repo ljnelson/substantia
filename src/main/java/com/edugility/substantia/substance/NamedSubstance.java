@@ -29,6 +29,8 @@ package com.edugility.substantia.substance;
 
 import java.beans.PropertyChangeListener;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 
 import java.util.Collection;
@@ -37,6 +39,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.edugility.nomen.AbstractNamed; // for javadoc only
+import com.edugility.nomen.AbstractValued; // for javadoc only
 import com.edugility.nomen.Name;
 import com.edugility.nomen.NameSupport;
 import com.edugility.nomen.NameValue;
@@ -45,15 +49,21 @@ import com.edugility.nomen.Valued;
 import com.edugility.nomen.NameType;
 
 /**
- * A {@linkplain AbstractNamed named} substrate with an {@linkplain Id
- * affiliated <code>Id</code>} to which properties and attributes may
- * be attached.
+ * A {@lnk Substance} that implements the {@link MutableNamed}
+ * interface.  Less formally, a substrate that can be named and that
+ * can have other attributes notionally attached to it.
  *
- * <p>A {@link Substance} serves to "take up space" in a coordinate
- * system.  It is an {@link AbstractNamed} implementation, so may
- * carry {@link Name}s of various kinds.</p>
+ * @author <a href="http://about.me/lairdnelson">Laird Nelson</a>
+ *
+ * @see Substance
+ *
+ * @see MutableNamed
+ *
+ * @see <a
+ * href="https://weblogs.java.net/blog/ljnelson/archive/2004/09/seventeenth_cen.html">Seventeenth
+ * Century Object Design</a>
  */
-public abstract class NamedSubstance<I extends Serializable, V extends Comparable<V> & Serializable> extends Substance<I, V> implements MutableNamed {
+public abstract class NamedSubstance<I extends Serializable, V extends Comparable<V> & Serializable> extends AbstractSubstance<I, V> implements MutableNamed {
 
   
   /*
@@ -66,6 +76,7 @@ public abstract class NamedSubstance<I extends Serializable, V extends Comparabl
   public static final NameType DISPLAY_NAME_NAME_TYPE = new NameType("displayName");
 
   public static final NameType SORT_NAME_NAME_TYPE = new NameType("sortName");
+
 
   /*
    * Instance fields.
@@ -80,7 +91,7 @@ public abstract class NamedSubstance<I extends Serializable, V extends Comparabl
    */
   private Map<NameType, Name> names;
 
-  private NameSupport nameSupport;
+  private transient NameSupport nameSupport;
 
 
   /*
@@ -144,6 +155,8 @@ public abstract class NamedSubstance<I extends Serializable, V extends Comparabl
    * @exception IllegalArgumentException if {@code nameType} or {@code
    * name} is {@code null}, or if {@code nameType} is unsuitable, or
    * if {@code name} is unsuitable
+   *
+   * @see NameSupport#putName(Map, NameType, Name)
    */
   @Override
   public Name putName(final NameType nameType, final Name name) {
@@ -169,6 +182,8 @@ public abstract class NamedSubstance<I extends Serializable, V extends Comparabl
    *
    * @exception IllegalArgumentException if {@code nameType} is {@code
    * null}
+   *
+   * @see NameSupport#removeName(Map, NameType)
    */
   @Override
   public Name removeName(final NameType nameType) {
@@ -183,8 +198,10 @@ public abstract class NamedSubstance<I extends Serializable, V extends Comparabl
    * <p>This method never returns {@code null}.</p>
    *
    * @return a non-{@code null} {@link Set} of {@link NameType}s
+   *
+   * @see NameSupport#getNameTypes(Map)
    */
-  public Set<NameType> getNameTypes() {
+  public Set<? extends NameType> getNameTypes() {
     return this.nameSupport.getNameTypes(this.names);
   }
 
@@ -195,8 +212,10 @@ public abstract class NamedSubstance<I extends Serializable, V extends Comparabl
    * <p>This method never returns {@code null}.</p>
    *
    * @return a non-{@code null} {@link Collection} of {@link Name}s
+   *
+   * @see NameSupport#getNames(Map)
    */
-  public Collection<Name> getNames() {
+  public Collection<? extends Name> getNames() {
     return this.nameSupport.getNames(this.names);
   }
 
@@ -224,6 +243,13 @@ public abstract class NamedSubstance<I extends Serializable, V extends Comparabl
       returnValue = sortName.getValue();
     }
     return returnValue;
+  }
+
+  public void readObject(final ObjectInputStream stream) throws ClassNotFoundException, IOException {
+    if (stream != null) {
+      stream.defaultReadObject();
+    }
+    this.nameSupport = new NameSupport(this);
   }
 
 }

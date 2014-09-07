@@ -25,38 +25,22 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.name;
+package com.edugility.substantia.substance;
 
-import com.edugility.nomen.NameValue;
+import java.io.Serializable;
 
-/**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
- */
-public class NameValueEntity extends NameValue {
+import java.util.Locale;
+
+public class LocalizedStringFacetId extends LocalizedFacetId<String> {
 
   private static final long serialVersionUID = 1L;
 
-  private Long pk;
-
-  protected NameValueEntity() {
+  public LocalizedStringFacetId() {
     super();
   }
 
-  public NameValueEntity(final String value) {
-    super(value);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
-  }
-
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
+  public LocalizedStringFacetId(final String substanceId, final Locale l) {
+    super(substanceId, l);
   }
 
 }

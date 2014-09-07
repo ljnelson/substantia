@@ -27,36 +27,73 @@
  */
 package com.edugility.substantia.name;
 
+import com.edugility.nomen.Name;
+import com.edugility.nomen.Named;
 import com.edugility.nomen.NameValue;
 
-/**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
- */
-public class NameValueEntity extends NameValue {
+import com.edugility.substantia.substance.Substance;
+
+public class NameEntity extends Name implements Substance<Long, Integer> {
 
   private static final long serialVersionUID = 1L;
 
   private Long pk;
 
-  protected NameValueEntity() {
+  private Integer version;
+
+  private Long namedId;
+
+  protected NameEntity() {
     super();
   }
 
-  public NameValueEntity(final String value) {
-    super(value);
+  @Override
+  public Long getId() {
+    return this.pk;
   }
 
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
+  @Override
+  public Integer getVersion() {
+    return this.version;
   }
 
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
+  @Override
+  public boolean isVersioned() {
+    return this.getVersion() != null;
   }
 
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
+  @Override
+  public boolean isTransient() {
+    return this.getId() == null;
+  }
+
+  public String getDisplayName() {
+    return this.getValue();
+  }
+
+  public String getSortName() {
+    return this.getDisplayName();
+  }
+
+  @Override
+  public Named getNamed() {
+    final Named named = super.getNamed();
+    if (named == null && this.namedId != null) {
+      throw new IllegalStateException();
+    }
+    return named;
+  }
+
+  @Override
+  public void setNamed(final Named named) {
+    super.setNamed(named);
+    if (named == null) {
+      this.namedId = null;
+    } else if (named instanceof Substance) {
+      this.namedId = ((Substance<Long, ?>)named).getId();
+    } else {
+      throw new IllegalArgumentException();
+    }
   }
 
 }

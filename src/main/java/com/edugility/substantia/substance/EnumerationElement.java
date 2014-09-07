@@ -25,38 +25,47 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.name;
+package com.edugility.substantia.substance;
 
-import com.edugility.nomen.NameValue;
+import java.io.Serializable;
 
-/**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
- */
-public class NameValueEntity extends NameValue {
+public abstract class EnumerationElement<I extends Serializable, V extends Serializable & Comparable<V>> extends AbstractSubstance<I, V> implements Comparable<EnumerationElement<I, V>> {
 
   private static final long serialVersionUID = 1L;
 
-  private Long pk;
+  private int ordinalPosition;
 
-  protected NameValueEntity() {
+  private boolean foundational;
+
+  protected EnumerationElement() {
     super();
   }
-
-  public NameValueEntity(final String value) {
-    super(value);
+  
+  protected EnumerationElement(final boolean foundational) {
+    this();
+    this.foundational = foundational;
   }
 
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
+  public int getOrdinalPosition() {
+    return this.ordinalPosition;
   }
 
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
+  public void setOrdinalPosition(final int ordinalPosition) {
+    this.ordinalPosition = ordinalPosition;
   }
 
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
+  public boolean isFoundational() {
+    return this.foundational;
+  }
+
+  @Override
+  public int compareTo(final EnumerationElement<I, V> e) {
+    if (e == null) {
+      throw new IllegalArgumentException("e", new NullPointerException("e"));
+    }
+    final int myPosition = this.getOrdinalPosition();
+    final int hisPosition = e.getOrdinalPosition();
+    return myPosition < hisPosition ? -1 : (myPosition == hisPosition ? 0 : 1);
   }
 
 }

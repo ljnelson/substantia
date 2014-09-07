@@ -27,9 +27,18 @@
  */
 package com.edugility.substantia.substance;
 
+import java.io.IOException;
+import java.io.Serializable;
+
 import javax.persistence.*;
 
+import com.edugility.nomen.Name;
+import com.edugility.nomen.NameType;
+import com.edugility.nomen.NameValue;
+
 import com.edugility.substantia.id.AtomicLongTableScopedIdType;
+
+import com.fasterxml.jackson.databind.ObjectMapper;  
 
 import org.junit.*;
 
@@ -39,6 +48,28 @@ public class TestCasePerson {
 
   public TestCasePerson() {
     super();
+  }
+
+  @Test
+  public void testJacksonMarshaling() throws IOException {
+    final ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule(new FredModule());
+    final Person p = mapper.readValue("{ \"names\" : { \"firstName\" : \"Fred\"}  }", Person.class);
+    final Name n = p.getName(new NameType("firstName"));
+    assertNotNull(n);
+    assertSame(p, n.getNamed());
+    final NameValue nv = n.getNameValue();
+    assertNotNull(nv);
+    assertEquals("Fred", nv.getValue());
+    mapper.writeValue(System.out, p);
+  }
+
+  @Test
+  public void testGenerics() {
+    final LoaderException e = new LoaderException(Person.class, Long.valueOf(2L), Integer.valueOf(0), null, null);
+    final Serializable id = e.getId();
+    final Comparable<?> version = e.getVersion();
+    final Class<? extends Substance<? extends Serializable, ?>> type = e.getType();
   }
 
   @Test

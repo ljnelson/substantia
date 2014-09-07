@@ -25,38 +25,16 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.name;
+package com.edugility.substantia.substance;
 
-import com.edugility.nomen.NameValue;
+import java.io.Serializable;
 
-/**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
- */
-public class NameValueEntity extends NameValue {
+import java.util.Locale;
 
-  private static final long serialVersionUID = 1L;
+public interface Loader {
 
-  private Long pk;
+  public <I extends Serializable, V extends Comparable<V> & Serializable, S extends Substance<I, V>> S load(final Class<S> cls, final I id, final V version, final Locale locale) throws LoaderException;
 
-  protected NameValueEntity() {
-    super();
-  }
-
-  public NameValueEntity(final String value) {
-    super(value);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
-  }
-
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
-  }
+  public <I extends Serializable, V extends Comparable<V> & Serializable, S extends Substance<I, V>> S refresh(final Class<S> cls, final I id, final V version, final Locale locale) throws LoaderException;
 
 }

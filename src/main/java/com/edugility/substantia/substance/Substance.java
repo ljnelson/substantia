@@ -29,139 +29,65 @@ package com.edugility.substantia.substance;
 
 import java.io.Serializable;
 
-/**
- * A substrate to which attributes may be attached.
- *
- * <p>A {@link Substance} serves to "take up space" in a coordinate
- * system.</p>
- */
-public abstract class Substance<I extends Serializable, V extends Comparable<V> & Serializable> implements Serializable {
+public interface Substance<I extends Serializable, V extends Comparable<V> & Serializable> extends Serializable {
 
-  private static final long serialVersionUID = 1L;
+  /**
+   * Returns the persistent identifier of this {@link Substance}.
+   *
+   * <p>Implementations of this method may return {@code null},
+   * particularly when a {@link Substance} is {@linkplain
+   * #isTransient() transient}.</p>
+   *
+   * <p>The return value of this method must not be used as part of
+   * the calculations performed by the {@link #equals(Object)} or
+   * {@link #hashCode()} methods.</p>
+   *
+   * @return the persistent identifier of this {@link Substance};
+   * possibly {@code null}
+   *
+   * @see #isTransient()
+   *
+   * @see Object#equals(Object)
+   *
+   * @see Object#hashCode()
+   */
+  public I getId();
 
-  protected Substance() {
-    super();
-  }
+  /**
+   * Returns the version of this {@link Substance}, for use in
+   * optimistic concurrency use cases only.
+   *
+   * <p>Implementations of this method may return {@code null},
+   * particularly when a {@link Substance} is {@linkplain
+   * #isVersioned() not versioned}.</p>
+   *
+   * @return the optimistic concurrency-related version of this {@link
+   * Substance}; possibly {@code null}
+   *
+   * @see #isVersioned()
+   */
+  public V getVersion();
 
-  public abstract I getId();
+  /**
+   * Returns {@code true} if this {@link Substance} is not (perhaps
+   * yet) backed by a persistent representation.
+   *
+   * @return {@code true} if this {@link Substance} is not backed by a
+   * persistent representation; {@code false} in all other cases
+   */
+  public boolean isTransient();
 
-  public abstract V getVersion();
-
-  public boolean isTransient() {
-    return this.getId() == null;
-  }
-
-  public boolean isVersioned() {
-    return this.getVersion() != null;
-  }
-
-  public final boolean represents(final Substance<?, ?> other) {
-    if (this.isTransient() ||
-        other == null ||
-        other.isTransient()) {
-      return false;
-    }
-
-    final Object myId = this.getId();
-    final Object hisId = other.getId();
-    if (myId == null || !myId.equals(hisId)) {
-      return false;
-    }
-    
-    return true;
-  }
-
-  public boolean isStalerThan(final Substance<? extends I, ? extends V> other) {
-    if (this.isTransient() || 
-        !this.isVersioned() ||
-        other == null ||
-        other.isTransient() || 
-        !other.isVersioned()) {
-      return false;
-    }
-
-    final Object id = this.getId();
-    if (id == null) {
-      if (other.getId() != null) {
-        return false;
-      }
-    } else if (!id.equals(other.getId())) {
-      return false;
-    }
-
-    final Comparable<V> version = this.getVersion();
-    if (version == null) {
-      return other.getVersion() == null;
-    } else {
-      final V hisVersion = other.getVersion();
-      return hisVersion != null && version.compareTo(hisVersion) < 0;
-    }
-  }
-
-  public abstract String getDisplayName();
-
-  public abstract String getSortName();
-
-  @Override
-  public int hashCode() {
-    int hashCode = 17;
-    int c;
-
-    c = super.hashCode();
-    hashCode = 37 * hashCode + c;
-
-    // Note: no usage of id in hashcode computation on purpose.
-
-    // TODO: should version be included here?
-    final Object version = this.getVersion();
-    c = version == null ? 0 : version.hashCode();
-    hashCode = 37 * hashCode + c;
-
-    final Object displayName = this.getDisplayName();
-    c = displayName == null ? 0 : displayName.hashCode();
-    hashCode = 37 * hashCode + c;
-
-    return hashCode;
-  }
-
-  @Override
-  public boolean equals(final Object other) {
-    if (other == this) {
-      return true;
-    } else if (other instanceof Substance) {
-      final Substance<?, ?> him = (Substance<?, ?>)other;
-      
-      // Note: no usage of id in equals computation on purpose.
-
-      // TODO: should version be included here?
-      final Object version = this.getVersion();
-      final Object hisVersion = him.getVersion();
-      if (version == null) {
-        if (hisVersion != null) {
-          return false;
-        }
-      } else if (!version.equals(hisVersion)) {
-        return false;
-      }
-      
-      final Object displayName = this.getDisplayName();
-      if (displayName == null) {
-        if (him.getDisplayName() != null) {
-          return false;
-        }
-      } else if (!displayName.equals(him.getDisplayName())) {
-        return false;
-      }
-
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @Override
-  public String toString() {
-    return String.valueOf(this.getDisplayName());
-  }
+  /**
+   * Returns {@code true} if this {@link Substance} is a versioned
+   * object, i.e. if it can be governed by <i>optimistic
+   * concurrency</i>.
+   *
+   * @return {@code true} if this {@link Substance} is a versioned
+   * object, i.e. if it can be governed by <i>optimistic
+   * concurrency</i>; {@code false} otherwise
+   *
+   * @see #getVersion()
+   */
+  public boolean isVersioned();
 
 }
