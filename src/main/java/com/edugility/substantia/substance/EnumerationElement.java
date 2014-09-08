@@ -35,15 +35,15 @@ public abstract class EnumerationElement<I extends Serializable, V extends Seria
 
   private int ordinalPosition;
 
-  private boolean foundational;
+  private boolean required;
 
   protected EnumerationElement() {
     super();
   }
   
-  protected EnumerationElement(final boolean foundational) {
+  protected EnumerationElement(final boolean required) {
     this();
-    this.foundational = foundational;
+    this.required = required;
   }
 
   public int getOrdinalPosition() {
@@ -54,8 +54,8 @@ public abstract class EnumerationElement<I extends Serializable, V extends Seria
     this.ordinalPosition = ordinalPosition;
   }
 
-  public boolean isFoundational() {
-    return this.foundational;
+  public boolean isRequired() {
+    return this.required;
   }
 
   @Override
