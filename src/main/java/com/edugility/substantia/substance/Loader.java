@@ -31,10 +31,8 @@ import java.io.Serializable;
 
 import java.util.Locale;
 
-public interface Loader {
+public interface Loader<I extends Serializable, V extends Comparable<V> & Serializable, S extends Substance<I, V>> {
 
-  public <I extends Serializable, V extends Comparable<V> & Serializable, S extends Substance<I, V>> S load(final Class<S> cls, final I id, final V version, final Locale locale) throws LoaderException;
-
-  public <I extends Serializable, V extends Comparable<V> & Serializable, S extends Substance<I, V>> S refresh(final Class<S> cls, final I id, final V version, final Locale locale) throws LoaderException;
+  public S load(final I id, final V version, final Locale locale) throws LoaderException;
 
 }

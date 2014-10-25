@@ -36,7 +36,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 
-public class PersonJPALoader implements Loader {
+public class PersonJPALoader implements MultiLoader {
 
   private EntityManager em;
 

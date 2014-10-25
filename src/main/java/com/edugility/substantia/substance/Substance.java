@@ -29,6 +29,8 @@ package com.edugility.substantia.substance;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 public interface Substance<I extends Serializable, V extends Comparable<V> & Serializable> extends Serializable {
 
   /**
@@ -39,8 +41,8 @@ public interface Substance<I extends Serializable, V extends Comparable<V> & Ser
    * #isTransient() transient}.</p>
    *
    * <p>The return value of this method must not be used as part of
-   * the calculations performed by the {@link #equals(Object)} or
-   * {@link #hashCode()} methods.</p>
+   * the calculations performed by the {@link Object#equals(Object)}
+   * or {@link Object#hashCode()} methods.</p>
    *
    * @return the persistent identifier of this {@link Substance};
    * possibly {@code null}
@@ -89,5 +91,19 @@ public interface Substance<I extends Serializable, V extends Comparable<V> & Ser
    * @see #getVersion()
    */
   public boolean isVersioned();
+
+  /**
+   * Returns the last moment at which, exactly, a modification
+   * occurred to this {@link Substance}.
+   *
+   * <p>Implementations of this method may return {@code null},
+   * indicating that the time of the last modification is unknown or
+   * not applicable.</p>
+   *
+   * @return a {@link Date} with millisecond precision representing
+   * the last moment at which, exactly, a modification occurred to
+   * this {@link Substance}, or {@code null}
+   */
+  public Date getLastModificationTime();
 
 }

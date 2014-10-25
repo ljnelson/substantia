@@ -49,7 +49,7 @@ import com.edugility.nomen.Valued;
 import com.edugility.nomen.NameType;
 
 /**
- * A {@lnk Substance} that implements the {@link MutableNamed}
+ * A {@link Substance} that implements the {@link MutableNamed}
  * interface.  Less formally, a substrate that can be named and that
  * can have other attributes notionally attached to it.
  *

@@ -29,6 +29,8 @@ package com.edugility.substantia.substance;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 @Deprecated
 public class DefaultSubstance<I extends Serializable, V extends Comparable<V> & Serializable> extends AbstractSubstance<I, V> {
 

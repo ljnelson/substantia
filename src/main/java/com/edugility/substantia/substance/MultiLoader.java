@@ -27,32 +27,14 @@
  */
 package com.edugility.substantia.substance;
 
-import java.util.Date;
+import java.io.Serializable;
 
-import com.edugility.substantia.id.AtomicLongTableScopedId;
-import com.edugility.substantia.id.AtomicLongTableScopedIdType;
-import com.edugility.substantia.id.Id;
+import java.util.Locale;
 
-public class Person extends NamedSubstance<Long, Integer> {
+public interface MultiLoader {
 
-  private static final long serialVersionUID = 1L;
+  public <I extends Serializable, V extends Comparable<V> & Serializable, S extends Substance<I, V>> S load(final Class<S> cls, final I id, final V version, final Locale locale) throws LoaderException;
 
-  private Long id;
-
-  private int version;
-
-  public Person() {
-    super();
-  }
-
-  @Override
-  public Long getId() {
-    return this.id;
-  }
-
-  @Override
-  public Integer getVersion() {
-    return Integer.valueOf(this.version);
-  }
+  public <I extends Serializable, V extends Comparable<V> & Serializable, S extends Substance<I, V>> S refresh(final Class<S> cls, final I id, final V version, final Locale locale) throws LoaderException;
 
 }

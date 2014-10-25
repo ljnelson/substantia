@@ -51,7 +51,11 @@ public abstract class EnumerationElement<I extends Serializable, V extends Seria
   }
 
   public void setOrdinalPosition(final int ordinalPosition) {
-    this.ordinalPosition = ordinalPosition;
+    final int old = this.getOrdinalPosition();
+    if (ordinalPosition != old) {
+      this.ordinalPosition = ordinalPosition;
+      this.recordModification();
+    }
   }
 
   public boolean isRequired() {

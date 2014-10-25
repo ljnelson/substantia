@@ -48,14 +48,14 @@ public class Substances {
     super();
   }
 
-  public static final <I extends Serializable, V extends Serializable & Comparable<V>, S extends Substance<I, V>> S merge(final Loader loader, final Class<? extends S> cls, final I id, final V version, final Locale locale, final Map<? extends String, ?> beanProperties) throws IllegalAccessException, IntrospectionException, InvocationTargetException, LoaderException {
-    if (loader == null) {
-      throw new IllegalArgumentException("loader", new NullPointerException("loader"));
+  public static final <I extends Serializable, V extends Serializable & Comparable<V>, S extends Substance<I, V>> S merge(final MultiLoader multiLoader, final Class<? extends S> cls, final I id, final V version, final Locale locale, final Map<? extends String, ?> beanProperties) throws IllegalAccessException, IntrospectionException, InvocationTargetException, LoaderException {
+    if (multiLoader == null) {
+      throw new IllegalArgumentException("multiLoader", new NullPointerException("multiLoader"));
     }
     if (cls == null) {
       throw new IllegalArgumentException("cls", new NullPointerException("cls"));
     }
-    final S target = loader.load(cls, id, version, locale);
+    final S target = multiLoader.load(cls, id, version, locale);
     if (target == null) {
       throw new IllegalArgumentException("No substance found corresponding to " + id + ", " + version);
     }

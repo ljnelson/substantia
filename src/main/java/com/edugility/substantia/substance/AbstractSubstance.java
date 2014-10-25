@@ -29,6 +29,8 @@ package com.edugility.substantia.substance;
 
 import java.io.Serializable;
 
+import java.util.Date;
+
 /**
  * A substrate to which attributes may be attached.
  *
@@ -40,7 +42,21 @@ import java.io.Serializable;
  */
 public abstract class AbstractSubstance<I extends Serializable, V extends Comparable<V> & Serializable> implements Substance<I, V> {
 
+
+  /*
+   * Static fields.
+   */
+
+
   private static final long serialVersionUID = 1L;
+
+
+  /*
+   * Instance fields.
+   */
+
+
+  private Date lastModificationTime;
 
 
   /*
@@ -147,9 +163,9 @@ public abstract class AbstractSubstance<I extends Serializable, V extends Compar
    * {@linkplain #getId() identifier} of <i>B</i></li>
    *
    * <li>Has a {@linkplain #getVersion() version} that, when
-   * {@linkplain Comparable#compareTo(Comparable) compared} to
-   * <i>B</i>'s {@linkplain #getVersion()}, results in a value less
-   * than {@code 0}</li>
+   * {@linkplain Comparable#compareTo(Object) compared} to <i>B</i>'s
+   * {@linkplain #getVersion()}, results in a value less than {@code
+   * 0}</li>
    *
    * </ul>
    *
@@ -200,6 +216,21 @@ public abstract class AbstractSubstance<I extends Serializable, V extends Compar
       return otherVersion != null && version.compareTo(otherVersion) < 0;
     }
   }
+
+  @Override
+  public Date getLastModificationTime() {
+    return this.lastModificationTime;
+  }
+
+  protected void recordModification() {
+    this.lastModificationTime = new Date();
+  }
+
+
+  /*
+   * Object implementation.
+   */
+
 
   @Override
   public int hashCode() {

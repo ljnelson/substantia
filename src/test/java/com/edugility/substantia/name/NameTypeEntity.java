@@ -27,6 +27,8 @@
  */
 package com.edugility.substantia.name;
 
+import java.util.Date;
+
 import com.edugility.nomen.NameType;
 
 import com.edugility.substantia.substance.Substance;
@@ -42,6 +44,8 @@ public class NameTypeEntity extends NameType implements Substance<Long, Integer>
   private Long id;
 
   private Integer version;
+
+  private Date lastModificationTime;
 
   protected NameTypeEntity() {
     super();
@@ -69,6 +73,11 @@ public class NameTypeEntity extends NameType implements Substance<Long, Integer>
   @Override
   public boolean isVersioned() {
     return this.getVersion() != null;
+  }
+  
+  @Override
+  public Date getLastModificationTime() {
+    return this.lastModificationTime;
   }
 
 }
