@@ -29,10 +29,13 @@ package com.edugility.substantia.substance;
 
 import java.io.Serializable;
 
+import com.edugility.substantia.annotations.RelatedBug;
+
 public abstract class EnumerationElement<I extends Serializable, V extends Serializable & Comparable<V>> extends AbstractSubstance<I, V> implements Comparable<EnumerationElement<I, V>> {
 
   private static final long serialVersionUID = 1L;
 
+  @Deprecated
   private int ordinalPosition;
 
   private boolean required;
@@ -46,10 +49,13 @@ public abstract class EnumerationElement<I extends Serializable, V extends Seria
     this.required = required;
   }
 
+  @Deprecated
+  @RelatedBug(bugId = "1", bugUrl = "https://github.com/ljnelson/substantia/issues/1")
   public int getOrdinalPosition() {
     return this.ordinalPosition;
   }
 
+  @Deprecated
   public void setOrdinalPosition(final int ordinalPosition) {
     final int old = this.getOrdinalPosition();
     if (ordinalPosition != old) {
