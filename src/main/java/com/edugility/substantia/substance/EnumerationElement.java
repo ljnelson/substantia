@@ -71,11 +71,18 @@ public abstract class EnumerationElement<I extends Serializable, V extends Seria
   @Override
   public int compareTo(final EnumerationElement<I, V> e) {
     if (e == null) {
-      throw new IllegalArgumentException("e", new NullPointerException("e"));
+      return -1; // nulls sort to the bottom
+    } else if (this.isRequired()) {
+      if (e.isRequired()) {
+        return 0;
+      } else {
+        return -1;
+      }
+    } else if (e.isRequired()) {
+      return 1;
+    } else {
+      return 0;
     }
-    final int myPosition = this.getOrdinalPosition();
-    final int hisPosition = e.getOrdinalPosition();
-    return myPosition < hisPosition ? -1 : (myPosition == hisPosition ? 0 : 1);
   }
 
 }
