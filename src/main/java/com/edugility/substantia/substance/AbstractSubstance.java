@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright (c) 2014 Edugility LLC.
+ * Copyright (c) 2014-2015 Edugility LLC.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -32,13 +32,19 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * A substrate to which attributes may be attached.
+ * A skeletal implementation of the {@link Substance} interface.
  *
- * <p>A {@link AbstractSubstance} serves to "take up space" in a coordinate
+ * <p>An {@link AbstractSubstance} serves to "take up space" in a coordinate
  * system.</p>
  *
+ * @param <I> the type of identifier implementations have
+ *
+ * @param <V> the type of version implementations have
+ * 
  * @author <a href="http://about.me/lairdnelson"
  * target="_parent">Laird Nelson</a>
+ *
+ * @see Substance
  */
 public abstract class AbstractSubstance<I extends Serializable, V extends Comparable<V> & Serializable> implements Substance<I, V> {
 

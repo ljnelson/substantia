@@ -35,12 +35,20 @@ public class LocalizedStringFacetId extends LocalizedFacetId<String> {
 
   private static final long serialVersionUID = 1L;
 
+  private String substanceId;
+  
   public LocalizedStringFacetId() {
     super();
   }
 
   public LocalizedStringFacetId(final String substanceId, final Locale l) {
-    super(substanceId, l);
+    super(l);
+    this.substanceId = substanceId;
+  }
+
+  @Override
+  public String getSubstanceId() {
+    return this.substanceId;
   }
 
 }

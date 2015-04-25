@@ -25,3 +25,45 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
+package com.edugility.substantia.substance;
+
+import java.io.Serializable;
+
+/**
+ * An interface indicating that its implementations are capable of
+ * being versioned for the purposes of optimistic concurrency control.
+ *
+ * @author <a href="http://about.me/lairdnelson"
+ * target="_parent">Laird Nelson</a>
+ */
+public interface Versioned<V extends Comparable<V> & Serializable> {
+
+  /**
+   * Returns the version of this {@link Versioned} implementation, for
+   * use in optimistic concurrency use cases only.
+   *
+   * <p>Implementations of this method may return {@code null},
+   * particularly when a {@link Versioned} implementation is
+   * {@linkplain #isVersioned() not versioned}.</p>
+   *
+   * @return the optimistic concurrency-related version of this {@link
+   * Substance}; possibly {@code null}
+   *
+   * @see #isVersioned()
+   */
+  public V getVersion();
+
+  /**
+   * Returns {@code true} if this {@link Versioned} implementation is
+   * a versioned object, i.e. if it can be governed by <i>optimistic
+   * concurrency</i>.
+   *
+   * @return {@code true} if this {@link Versioned} implementation is
+   * a versioned object, i.e. if it can be governed by <i>optimistic
+   * concurrency</i>; {@code false} otherwise
+   *
+   * @see #getVersion()
+   */
+  public boolean isVersioned();
+  
+}

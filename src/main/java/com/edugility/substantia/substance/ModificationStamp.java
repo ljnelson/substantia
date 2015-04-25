@@ -29,86 +29,82 @@ package com.edugility.substantia.substance;
 
 import java.io.Serializable;
 
-import java.util.Locale;
+import java.util.Date;
 
-/**
- * A pairing of a {@link Locale} and a {@link Serializable} identifier
- * of a {@link Substance} that serves, typically, to identify a
- * particular localized <em>facet</em> of a given {@link Substance}.
- *
- * @param <SI> a {@link Serializable} identifier of a {@link Substance}
- *
- * @author <a href="http://about.me/lairdnelson"
- * target="_parent">Laird Nelson</a>
- *
- * @see Substance
- */
-public abstract class LocalizedFacetId<SI extends Serializable> implements Serializable {
+public final class ModificationStamp<V extends Comparable<V> & Serializable> implements LastModificationTimed, Serializable, Versioned<V> {
 
   private static final long serialVersionUID = 1L;
 
-  private Locale locale;
+  private final V version;
 
-  protected LocalizedFacetId() {
+  private final Date lastModificationTime;
+
+  public ModificationStamp(final V version, final Date lastModificationTime) {
     super();
-  }
-
-  protected LocalizedFacetId(final Locale l) {
-    this();
-    this.locale = l;
-  }
-
-  public abstract SI getSubstanceId();
-
-  public Locale getLocale() {
-    return this.locale;
+    this.version = version;
+    this.lastModificationTime = lastModificationTime;
   }
 
   @Override
-  public int hashCode() {
+  public final V getVersion() {
+    return this.version;
+  }
+
+  @Override
+  public final boolean isVersioned() {
+    return this.getVersion() != null;
+  }
+
+  @Override
+  public final Date getLastModificationTime() {
+    return this.lastModificationTime;
+  }
+
+  @Override
+  public final int hashCode() {
     int hashCode = 17;
-    int c;
 
-    final Object id = this.getSubstanceId();
-    c = id == null ? 0 : id.hashCode();
-    hashCode = 37 * hashCode + c;
+    final Object version = this.getVersion();
+    if (version != null) {
+      hashCode = 37 * hashCode + version.hashCode();
+    }
 
-    final Object locale = this.getLocale();
-    c = locale == null ? 0 : locale.hashCode();
-    hashCode = 37 * hashCode + c;
-
+    final Object lastModificationTime = this.getLastModificationTime();
+    if (lastModificationTime != null) {
+      hashCode = 37 * hashCode + lastModificationTime.hashCode();
+    }
+    
     return hashCode;
   }
-
+  
   @Override
-  public boolean equals(final Object other) {
+  public final boolean equals(final Object other) {
     if (other == this) {
       return true;
-    } else if (other instanceof LocalizedFacetId) {
-      final LocalizedFacetId<?> him = (LocalizedFacetId<?>)other;
-
-      final Object substanceId = this.getSubstanceId();
-      if (substanceId == null) {
-        if (him.getSubstanceId() != null) {
+    } else if (other instanceof ModificationStamp) {
+      final ModificationStamp<?> him = (ModificationStamp<?>)other;
+      final Object myVersion = this.getVersion();
+      if (myVersion == null) {
+        if (him.getVersion() != null) {
           return false;
         }
-      } else if (!substanceId.equals(him.getSubstanceId())) {
+      } else if (!myVersion.equals(him.getVersion())) {
+        return false;
+      }
+      
+      final Object myLastModificationTime = this.getLastModificationTime();
+      if (myLastModificationTime == null) {
+        if (him.getLastModificationTime() != null) {
+          return false;
+        }
+      } else if (!myLastModificationTime.equals(him.getLastModificationTime())) {
         return false;
       }
 
-      final Object locale = this.getLocale();
-      if (locale == null) {
-        if (him.getLocale() != null) {
-          return false;
-        }
-      } else if (!locale.equals(him.getLocale())) {
-        return false;
-      }
-
-      return true;
+      return true;      
     } else {
       return false;
     }
   }
-
+  
 }

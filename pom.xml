@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <prerequisites>
-    <maven>3.0.4</maven>
+    <maven>3.0.5</maven>
   </prerequisites>
 
   <groupId>com.edugility</groupId>
@@ -111,9 +111,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <!--
       <scope>test</scope>
-      -->
     </dependency>
 
   </dependencies>
@@ -210,7 +208,7 @@
     <maven.compiler.showWarnings>true</maven.compiler.showWarnings>
 
     <!-- maven-javadoc-plugin properties -->
-    <links>http://junit.org/javadoc/4.10/</links>
+    <links>http://junit.org/javadoc/latest/</links>
     <!--
     <stylesheetfile>css/styles.css</stylesheetfile>
     -->

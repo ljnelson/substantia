@@ -35,12 +35,20 @@ public class LocalizedShortFacetId extends LocalizedFacetId<Short> {
 
   private static final long serialVersionUID = 1L;
 
+  private Short substanceId;
+
   public LocalizedShortFacetId() {
     super();
   }
 
   public LocalizedShortFacetId(final short substanceId, final Locale l) {
-    super(Short.valueOf(substanceId), l);
+    super(l);
+    this.substanceId = Short.valueOf(substanceId);
+  }
+
+  @Override
+  public Short getSubstanceId() {
+    return this.substanceId;
   }
 
 }

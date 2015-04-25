@@ -33,6 +33,10 @@ import java.util.Locale;
 
 public interface Loader<I extends Serializable, V extends Comparable<V> & Serializable, S extends Substance<I, V>> {
 
-  public S load(final I id, final V version, final Locale locale) throws LoaderException;
+  public S load(final I id) throws LoaderException;
+  
+  public S load(final I id, final V version) throws LoaderException;
 
+  public ModificationStamp<V> loadModificationStamp(final I id) throws LoaderException;
+  
 }

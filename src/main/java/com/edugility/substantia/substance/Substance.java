@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright (c) 2014 Edugility LLC.
+ * Copyright (c) 2014-2015 Edugility LLC.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -31,7 +31,21 @@ import java.io.Serializable;
 
 import java.util.Date;
 
-public interface Substance<I extends Serializable, V extends Comparable<V> & Serializable> extends Serializable {
+/**
+ * A substrate to which additional properties adhere.
+ *
+ * @param <I> the type of identifier that implementations have
+ *
+ * @param <V> the type of version that implementations have
+ *
+ * @author <a href="http://about.me/lairdnelson"
+ * target="_parent">Laird Nelson</a>
+ *
+ * @see LastModificationTimed
+ *
+ * @see Versioned
+ */
+public interface Substance<I extends Serializable, V extends Comparable<V> & Serializable> extends LastModificationTimed, Versioned<V> {
 
   /**
    * Returns the persistent identifier of this {@link Substance}.
@@ -56,21 +70,6 @@ public interface Substance<I extends Serializable, V extends Comparable<V> & Ser
   public I getId();
 
   /**
-   * Returns the version of this {@link Substance}, for use in
-   * optimistic concurrency use cases only.
-   *
-   * <p>Implementations of this method may return {@code null},
-   * particularly when a {@link Substance} is {@linkplain
-   * #isVersioned() not versioned}.</p>
-   *
-   * @return the optimistic concurrency-related version of this {@link
-   * Substance}; possibly {@code null}
-   *
-   * @see #isVersioned()
-   */
-  public V getVersion();
-
-  /**
    * Returns {@code true} if this {@link Substance} is not (perhaps
    * yet) backed by a persistent representation.
    *
@@ -78,32 +77,5 @@ public interface Substance<I extends Serializable, V extends Comparable<V> & Ser
    * persistent representation; {@code false} in all other cases
    */
   public boolean isTransient();
-
-  /**
-   * Returns {@code true} if this {@link Substance} is a versioned
-   * object, i.e. if it can be governed by <i>optimistic
-   * concurrency</i>.
-   *
-   * @return {@code true} if this {@link Substance} is a versioned
-   * object, i.e. if it can be governed by <i>optimistic
-   * concurrency</i>; {@code false} otherwise
-   *
-   * @see #getVersion()
-   */
-  public boolean isVersioned();
-
-  /**
-   * Returns the last moment at which, exactly, a modification
-   * occurred to this {@link Substance}.
-   *
-   * <p>Implementations of this method may return {@code null},
-   * indicating that the time of the last modification is unknown or
-   * not applicable.</p>
-   *
-   * @return a {@link Date} with millisecond precision representing
-   * the last moment at which, exactly, a modification occurred to
-   * this {@link Substance}, or {@code null}
-   */
-  public Date getLastModificationTime();
 
 }
