@@ -45,8 +45,6 @@ public class NameTypeEntity extends NameType implements Substance<Long, Integer>
 
   private Integer version;
 
-  private Date lastModificationTime;
-
   protected NameTypeEntity() {
     super();
   }
@@ -75,9 +73,4 @@ public class NameTypeEntity extends NameType implements Substance<Long, Integer>
     return this.getVersion() != null;
   }
   
-  @Override
-  public Date getLastModificationTime() {
-    return this.lastModificationTime;
-  }
-
 }

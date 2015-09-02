@@ -45,7 +45,7 @@ import java.util.Date;
  *
  * @see Versioned
  */
-public interface Substance<I extends Serializable, V extends Comparable<V> & Serializable> extends LastModificationTimed, Versioned<V> {
+public interface Substance<I extends Serializable, V extends Comparable<V> & Serializable> extends Versioned<V> {
 
   /**
    * Returns the persistent identifier of this {@link Substance}.

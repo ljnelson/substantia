@@ -62,9 +62,6 @@ public abstract class AbstractSubstance<I extends Serializable, V extends Compar
    */
 
 
-  private Date lastModificationTime;
-
-
   /*
    * Constructors.
    */
@@ -221,15 +218,6 @@ public abstract class AbstractSubstance<I extends Serializable, V extends Compar
     } else {
       return otherVersion != null && version.compareTo(otherVersion) < 0;
     }
-  }
-
-  @Override
-  public Date getLastModificationTime() {
-    return this.lastModificationTime;
-  }
-
-  protected void recordModification() {
-    this.lastModificationTime = new Date();
   }
 
 

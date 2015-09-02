@@ -60,7 +60,6 @@ public abstract class EnumerationElement<I extends Serializable, V extends Seria
     final int old = this.getOrdinalPosition();
     if (ordinalPosition != old) {
       this.ordinalPosition = ordinalPosition;
-      this.recordModification();
     }
   }
 

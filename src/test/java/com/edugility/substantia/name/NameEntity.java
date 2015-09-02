@@ -45,8 +45,6 @@ public class NameEntity extends Name implements Substance<Long, Integer> {
 
   private Long namedId;
 
-  private Date lastModificationTime;
-
   protected NameEntity() {
     super();
   }
@@ -64,11 +62,6 @@ public class NameEntity extends Name implements Substance<Long, Integer> {
   @Override
   public boolean isVersioned() {
     return this.getVersion() != null;
-  }
-
-  @Override
-  public Date getLastModificationTime() {
-    return this.lastModificationTime;
   }
 
   @Override

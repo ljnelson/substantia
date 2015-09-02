@@ -5,15 +5,6 @@
                                      http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
                  version="2.1">
 
-  <mapped-superclass name="com.edugility.substantia.substance.AbstractSubstance">
-    <attributes>
-      <basic access="FIELD" name="lastModificationTime" optional="true">
-        <column name="LAST_MODIFICATION_TIME" nullable="true"/>
-        <temporal>TIMESTAMP</temporal>
-      </basic>
-    </attributes>
-  </mapped-superclass>
-
   <entity access="FIELD" class="com.edugility.substantia.id.IdTypeEntity">
     <table name="IDTYPE"/>
     <attributes>
@@ -63,10 +54,6 @@
       </version>
       <basic name="value" optional="false">
         <column name="VALUE" length="30" nullable="false"/>
-      </basic>
-      <basic access="FIELD" name="lastModificationTime">
-        <column name="LAST_MODIFICATION_TIME" nullable="true"/>
-        <temporal>TIMESTAMP</temporal>
       </basic>
     </attributes>
   </entity>
@@ -121,10 +108,6 @@
         <foreign-key name="FK_NAME_NAMEVALUE" constraint-mode="CONSTRAINT" foreign-key-definition="FOREIGN KEY (NAME_VALUE_ID) REFERENCES NAME_VALUE (ID)"/>
       </many-to-one>
       <transient name="named"/>
-      <basic access="FIELD" name="lastModificationTime">
-        <column name="LAST_MODIFICATION_TIME" nullable="true"/>
-        <temporal>TIMESTAMP</temporal>
-      </basic>
       <version name="version" access="FIELD">
         <column name="VERSION" nullable="false" default="0"/>
       </version>
