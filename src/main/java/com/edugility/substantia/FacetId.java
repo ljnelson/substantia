@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright (c) 2014 Edugility LLC.
+ * Copyright (c) 2014-2015 Edugility LLC.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,52 +25,12 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.name;
+package com.edugility.substantia;
 
-import java.util.Date;
+import java.io.Serializable;
 
-import com.edugility.nomen.NameType;
+public interface FacetId<SI, I> extends Identified<I>, Serializable {
 
-import com.edugility.substantia.substance.Substance;
-
-/**
- * A {@link NameType} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
- */
-public class NameTypeEntity extends NameType implements Substance<Long, Integer> {
-
-  private static final long serialVersionUID = 1L;
-
-  private Long id;
-
-  private Integer version;
-
-  protected NameTypeEntity() {
-    super();
-  }
-
-  public NameTypeEntity(final String value) {
-    super(value);
-  }
-
-  @Override
-  public Long getId() {
-    return this.id;
-  }
-
-  @Override
-  public Integer getVersion() {
-    return this.version;
-  }
-
-  @Override
-  public boolean isTransient() {
-    return this.getId() == null;
-  }
-
-  @Override
-  public boolean isVersioned() {
-    return this.getVersion() != null;
-  }
+  public SI getSubstrateId();
   
 }

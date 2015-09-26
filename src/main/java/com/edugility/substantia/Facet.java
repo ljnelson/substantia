@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright (c) 2014 Edugility LLC.
+ * Copyright (c) 2014-2015 Edugility LLC.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,26 +25,8 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.substance;
+package com.edugility.substantia;
 
-import javax.persistence.*;
-
-import com.edugility.substantia.id.AtomicLongTableScopedIdType;
-
-import org.junit.*;
-
-import static org.junit.Assert.*;
-
-public class TestCaseSubstance {
-
-  public TestCaseSubstance() {
-    super();
-  }
-
-  @Test
-  public void testRepresents() throws Exception {
-    
-  }
-
+public interface Facet<FI extends FacetId<SI, I>, SI, I> extends Identified<FI> {
 
 }

@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright (c) 2014 Edugility LLC.
+ * Copyright (c) 2014-2015 Edugility LLC.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,14 +25,33 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.id;
+package com.edugility.substantia.annotations;
 
-public class AtomicLongTableScopedIdType<R> extends IdType<Long, R> {
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-  private static final long serialVersionUID = 1L;
+@Documented
+@Retention(RetentionPolicy.CLASS)
+@Target({
+  ElementType.CONSTRUCTOR, 
+  ElementType.FIELD,
+  ElementType.LOCAL_VARIABLE,
+  ElementType.METHOD,
+  ElementType.PACKAGE,
+  ElementType.PARAMETER,
+  ElementType.TYPE
+})
+public @interface SpecificationRequirement {
+  
+  String name() default "";
 
-  public AtomicLongTableScopedIdType(final Class<R> referentType) {
-    super("AtomicLongTableScopedIdType", Long.class, referentType);
-  }
+  String description() default "";
 
+  String version() default "";
+
+  String section() default "";
+  
 }

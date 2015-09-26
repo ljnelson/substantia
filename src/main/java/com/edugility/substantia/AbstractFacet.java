@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright (c) 2014 Edugility LLC.
+ * Copyright (c) 2014-2015 Edugility LLC.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,38 +25,12 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.name;
+package com.edugility.substantia;
 
-import com.edugility.nomen.NameValue;
+public abstract class AbstractFacet<FI extends FacetId<SI, I>, SI, I> implements Facet<FI, SI, I> {
 
-/**
- * A {@link NameValue} with a {@link Long} primary key.  This class is
- * suitable for use in unit and functional testing only.
- */
-public class NameValueEntity extends NameValue {
-
-  private static final long serialVersionUID = 1L;
-
-  private Long pk;
-
-  protected NameValueEntity() {
+  protected AbstractFacet() {
     super();
   }
-
-  public NameValueEntity(final String value) {
-    super(value);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic) {
-    super(value, atomic);
-  }
-
-  public NameValueEntity(final String value, final String whitespaceReplacement) {
-    super(value, whitespaceReplacement);
-  }
-
-  public NameValueEntity(final String value, final boolean atomic, final String whitespaceReplacement) {
-    super(value, atomic, whitespaceReplacement);
-  }
-
+  
 }

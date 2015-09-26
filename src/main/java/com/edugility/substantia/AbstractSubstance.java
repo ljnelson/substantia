@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright (c) 2014 Edugility LLC.
+ * Copyright (c) 2014-2015 Edugility LLC.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,29 +25,12 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.annotations;
+package com.edugility.substantia;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+public abstract class AbstractSubstance<I, V extends Comparable<V>> extends AbstractVersioned<I, V> {
 
-@Documented
-@Retention(RetentionPolicy.CLASS)
-@Target({
-  ElementType.CONSTRUCTOR, 
-  ElementType.FIELD,
-  ElementType.METHOD,
-  ElementType.PACKAGE,
-  ElementType.TYPE
-})
-public @interface Notes {
-
-  String description() default "";
-
-  String url() default "";
-
-  String project() default "";
-
+  protected AbstractSubstance() {
+    super();
+  }
+  
 }

@@ -25,32 +25,10 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.substance;
+package com.edugility.substantia;
 
-import java.util.Date;
+public interface Versioned<I, V extends Comparable<V>> extends Identified<I> {
 
-/**
- * An interface indicating that its implementations are capable of
- * reporting the moment on which they were last modified.
- *
- * @author <a href="http://about.me/lairdnelson"
- * target="_parent">Laird Nelson</a>
- */
-public interface LastModificationTimed {
-
-  /**
-   * Returns the last moment at which, exactly, a modification
-   * occurred to this {@link LastModificationTimed} implementation.
-   *
-   * <p>Implementations of this method may return {@code null},
-   * indicating that the time of the last modification is unknown or
-   * not applicable.</p>
-   *
-   * @return a {@link Date} with millisecond precision representing
-   * the last moment at which, exactly, a modification occurred to
-   * this {@link LastModificationTimed} implementation, or {@code
-   * null}
-   */
-  public Date getLastModificationTime();
+  public V getVersion();
   
 }

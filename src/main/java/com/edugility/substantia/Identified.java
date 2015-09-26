@@ -1,6 +1,6 @@
 /* -*- mode: Java; c-basic-offset: 2; indent-tabs-mode: nil; coding: utf-8-unix -*-
  *
- * Copyright (c) 2014 Edugility LLC.
+ * Copyright (c) 2014-2015 Edugility LLC.
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -25,20 +25,10 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia.id;
+package com.edugility.substantia;
 
-public class IdTypeEntity<I, R> extends IdType<I, R> {
+public interface Identified<I> {
 
-  private static final long serialVersionUID = 1L;
-
-  private Long pk;
-
-  protected IdTypeEntity() {
-    super();
-  }
-
-  public IdTypeEntity(final String name, final Class<I> referenceType, final Class<R> referentType) {
-    super(name, referenceType, referentType);
-  }
-
+  public I getId();
+  
 }
