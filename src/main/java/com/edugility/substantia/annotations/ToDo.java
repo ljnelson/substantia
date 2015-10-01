@@ -25,29 +25,39 @@
  * The original copy of this license is available at
  * http://www.opensource.org/license/mit-license.html.
  */
-package com.edugility.substantia;
+package com.edugility.substantia.annotations;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * An {@link Identified} facet of another object, known as a
- * <em>substrate</em>.
- *
- * @param <FI> the kind of {@link FacetId} to be used to identify
- * facets of this kind (the <strong>f</strong>acet
- * <strong>i</strong>dentifier type)
- *
- * @param <SI> the <strong>s</strong>ubstrate
- * <strong>i</strong>dentifier type that is used to uniquely identify
- * the kinds of substrates that facets of this kind are properties of
- *
- * @param <I> the "discriminator" identifier of facets of this kind
+ * Indicates that the annotated element has a "to do" item associated
+ * with it.
  *
  * @author <a href="http://about.me/lairdnelson/"
  * target="_parent">Laird Nelson</a>
- *
- * @see Identified
- *
- * @see FacetId
  */
-public interface Facet<FI extends FacetId<SI, I>, SI, I> extends Identified<FI> {
+@Documented
+@Retention(RetentionPolicy.CLASS)
+@Target({
+  ElementType.CONSTRUCTOR, 
+  ElementType.FIELD,
+  ElementType.LOCAL_VARIABLE,
+  ElementType.METHOD,
+  ElementType.PACKAGE,
+  ElementType.PARAMETER,
+  ElementType.TYPE
+})
+public @interface ToDo {
 
+  /**
+   * The description of the "to do" item.
+   *
+   * @return the description of the "to do" item
+   */
+  String description();
+  
 }

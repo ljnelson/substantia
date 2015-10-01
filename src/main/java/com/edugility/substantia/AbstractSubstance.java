@@ -27,8 +27,20 @@
  */
 package com.edugility.substantia;
 
-public abstract class AbstractSubstance<I, V extends Comparable<V>> extends AbstractVersioned<I, V> {
+/**
+ * A skeletal implementation of the {@link Versioned}&mdash;and
+ * therefore also the {@link Identified}&mdash;interface.
+ *
+ * @author <a href="http://about.me/lairdnelson/"
+ * target="_parent">Laird Nelson</a>
+ *
+ * @see Versioned
+ */
+public abstract class AbstractSubstance<I, V extends Comparable<V>> implements Versioned<I, V> {
 
+  /**
+   * Creates a new {@link AbstractSubstance}.
+   */
   protected AbstractSubstance() {
     super();
   }

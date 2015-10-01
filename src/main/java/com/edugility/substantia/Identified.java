@@ -27,8 +27,27 @@
  */
 package com.edugility.substantia;
 
+/**
+ * An interface indicating that its implementations are uniquely
+ * identified in some way.
+ *
+ * @param <I> the type of the identifiers returned by implementations
+ * of this interface
+ *
+ * @author <a href="http://about.me/lairdnelson/"
+ * target="_parent">Laird Nelson</a>
+ */
 public interface Identified<I> {
 
+  /**
+   * Returns the identifier of this {@link Identified} implementation.
+   *
+   * <p>Implementations of this method are permitted to return {@code
+   * null} if the identifier has not yet been set or initialized.</p>
+   *
+   * @return the identifier of this {@link Identified} implementation,
+   * or {@code null}
+   */
   public I getId();
   
 }

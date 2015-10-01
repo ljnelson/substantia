@@ -29,8 +29,33 @@ package com.edugility.substantia;
 
 import java.io.Serializable;
 
+/**
+ * A composite identifier used to identify {@link Facet}s.
+ *
+ * @param <SI> the <strong>s</strong>ubstrate
+ * <strong>i</strong>dentifier type
+ *
+ * @param <I> the type of the identifier used for {@link FacetId}s of
+ * this type
+ *
+ * @author <a href="http://about.me/lairdnelson/"
+ * target="_parent">Laird Nelson</a>
+ */
 public interface FacetId<SI, I> extends Identified<I>, Serializable {
 
+  /**
+   * Returns the identifier of the <em>substrate</em> this {@link
+   * FacetId} identifies.
+   *
+   * <p>Implementations of this method may return {@code null}.
+   * {@code null} return values indicate only that this {@link
+   * FacetId} implementation has not been fully initialized.</p>
+   *
+   * @return the identifier of the substrate this {@link FacetId}
+   * identifies, or {@code null}
+   *
+   * @see #getId()
+   */
   public SI getSubstrateId();
   
 }

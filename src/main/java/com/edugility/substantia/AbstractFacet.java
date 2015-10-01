@@ -27,6 +27,26 @@
  */
 package com.edugility.substantia;
 
+/**
+ * A skeletal implementation of the {@link Facet} interface.
+ *
+ * @param <FI> the kind of {@link FacetId} to be used to identify
+ * facets of this kind (the <strong>f</strong>acet
+ * <strong>i</strong>dentifier type)
+ *
+ * @param <SI> the <strong>s</strong>ubstrate
+ * <strong>i</strong>dentifier type that is used to uniquely identify
+ * the kinds of substrates that facets of this kind are properties of
+ *
+ * @param <I> the "discriminator" identifier of facets of this kind
+ *
+ * @author <a href="http://about.me/lairdnelson/"
+ * target="_parent">Laird Nelson</a>
+ *
+ * @see Facet
+ *
+ * @see FacetId
+ */
 public abstract class AbstractFacet<FI extends FacetId<SI, I>, SI, I> implements Facet<FI, SI, I> {
 
   protected AbstractFacet() {

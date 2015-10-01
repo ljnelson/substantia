@@ -33,6 +33,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Indicates that the annotated element is experimental.
+ *
+ * @author <a href="http://about.me/lairdnelson/"
+ * target="_parent">Laird Nelson</a>
+ */
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target({

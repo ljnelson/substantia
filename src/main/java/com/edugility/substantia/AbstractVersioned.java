@@ -27,8 +27,23 @@
  */
 package com.edugility.substantia;
 
+/**
+ * A skeletal implementation of the {@link Versioned} interface whose
+ * {@linkplain #getVersion() version property} is {@link Comparable}.
+ *
+ * @author <a href="http://about.me/lairdnelson/"
+ * target="_parent">Laird Nelson</a>
+ *
+ * @see Versioned
+ *
+ * @deprecated Please use {@link AbstractSubstance} instead.
+ */
+@Deprecated
 public abstract class AbstractVersioned<I, V extends Comparable<V>> implements Versioned<I, V> {
 
+  /**
+   * Creates a new {@link AbstractVersioned}.
+   */
   protected AbstractVersioned() {
     super();
   }

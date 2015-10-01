@@ -33,6 +33,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Indicates that the annotated element exists because of a
+ * specification requirement.
+ *
+ * @author <a href="http://about.me/lairdnelson/"
+ * target="_parent">Laird Nelson</a>
+ */
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target({
@@ -45,13 +52,34 @@ import java.lang.annotation.Target;
   ElementType.TYPE
 })
 public @interface SpecificationRequirement {
-  
+
+  /**
+   * The name of the specification.
+   *
+   * @return the name of the specification
+   */
   String name() default "";
 
-  String description() default "";
-
+  /**
+   * The version of the specification.
+   *
+   * @return the version of the specification
+   */
   String version() default "";
 
+  /**
+   * The section of the specification.
+   *
+   * @return the section of the specification
+   */
   String section() default "";
+  
+  /**
+   * The description of the requirement (ideally a citation from the
+   * specification).
+   *
+   * @return the description of the requirement
+   */
+  String description() default "";
   
 }

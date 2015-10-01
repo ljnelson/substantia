@@ -27,8 +27,31 @@
  */
 package com.edugility.substantia;
 
+/**
+ * An interface indicating that its implmentations are versioned in some way.
+ *
+ * @param <I> the type of the identifiers returned by implementations
+ * of this interface
+ *
+ * @param <V> the type of versions returned by implementations of this
+ * interface
+ *
+ * @author <a href="http://about.me/lairdnelson/"
+ * target="_parent">Laird Nelson</a>
+ *
+ * @see Identified
+ */
 public interface Versioned<I, V extends Comparable<V>> extends Identified<I> {
 
+  /**
+   * Returns the version for this {@link Versioned} implementation.
+   *
+   * <p>Implementations of this method are permitted to return {@code
+   * null}.</p>
+   *
+   * @return the version for this {@link Versioned} implementation, or
+   * {@code null}
+   */
   public V getVersion();
   
 }
