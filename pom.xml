@@ -13,7 +13,7 @@
   <parent>
     <groupId>com.edugility</groupId>
     <artifactId>edugility-oss-pluginmanagement-pom</artifactId>
-    <version>5</version>
+    <version>14</version>
   </parent>
 
   <name>Substantia</name>
@@ -121,6 +121,9 @@
     <!--
     <stylesheetfile>css/styles.css</stylesheetfile>
     -->
+
+    <!-- maven-release-plugin properties -->
+    <goals>deploy site-deploy</goals>
 
     <umlGraphVersion>5.6.6</umlGraphVersion>
 
